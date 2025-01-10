@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gumroad Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      text-align: center;
+      padding: 2em 0;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1em;
+      margin: 1em 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Real-Time Gumroad Analytics</h1>
+    <div id="analytics">
+      <p>Loading data...</p>
+    </div>
+  </div>
+  <script>
+    async function fetchAnalytics() {
+      try {
+        const response = await fetch('/api/analytics');
+        const data = await response.json();
+        document.getElementById('analytics').innerHTML = `
+          <div class="card">
+            <h2>Total Sales: ${data.total_sales || 0}</h2>
+            <p>Total Revenue: $${data.total_revenue || 0}</p>
+          </div>
+        `;
+      } catch (error) {
+        document.getElementById('analytics').innerHTML = `<p>Error loading data</p>`;
+      }
+    }
+    fetchAnalytics();
+  </script>
+</body>
+</html>
